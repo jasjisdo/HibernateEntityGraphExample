@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.dailab.hbmexample</groupId>
+    <artifactId>hbmexample1</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <schaufenster.version>0.0.1-SNAPSHOT</schaufenster.version>
+        <jiac.version>5.1.5</jiac.version>
+        <!-- helpful tools versions -->
+        <guava.version>18.0</guava.version>
+        <joda-time.version>2.7</joda-time.version>
+        <!-- spring stuff versions -->
+        <spring-framework.version>3.2.13.RELEASE</spring-framework.version>
+        <spring-data-jpa.version>1.6.5.RELEASE</spring-data-jpa.version>
+        <spring-data-commons.version>1.8.5.RELEASE</spring-data-commons.version>
+        <!-- persistence and db stuff versions -->
+        <hibernate.version>4.3.10.Final</hibernate.version>
+        <ehcache-core.version>2.4.7</ehcache-core.version>
+        <usertype.core.version>3.2.0.GA</usertype.core.version>
+        <threeten-jpa.version>1.2.0</threeten-jpa.version>
+        <microsoft.sqljdbc41.version>4.1.0-1.7.0_67-b01</microsoft.sqljdbc41.version>
+        <h2database.version>1.4.187</h2database.version>
+        <!-- web stuff versions -->
+        <glassfish.jersey.version>2.15</glassfish.jersey.version>
+        <ant-commons-net.version>1.9.4</ant-commons-net.version>
+        <!-- test stuff versions -->
+        <junit.version>4.12</junit.version>
+        <mockito-core.version>1.10.19</mockito-core.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>${spring-data-jpa.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>${spring-data-commons.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>jcl-over-slf4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- this might be useful for one or the other standard calculation, like
+              sum, max, mean, etc. -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!-- awesome library for pseudo-funcitonal style programming (map, filter, etc.) -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>de.dailab.schaufenster.common</groupId>
+            <artifactId>datamanagement</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.dailab.jiactng</groupId>
+            <artifactId>agentCore</artifactId>
+            <version>${jiac.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+        <!-- 		<dependency> -->
+        <!--             <groupId>org.springframework</groupId> -->
+        <!--             <artifactId>spring-context</artifactId> -->
+        <!--             <version>4.0.0.RELEASE</version> -->
+        <!--          </dependency> -->
+
+        <!-- for reading .ical files -->
+        <dependency>
+            <groupId>net.sf.biweekly</groupId>
+            <artifactId>biweekly</artifactId>
+            <version>0.3.2</version>
+            <exclusions>
+                <!-- jCal functionality not needed -->
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--
+        BEGINN of java persistence dependencies (jpa, orm, hibernate, jdbc-driver etc.)
+        -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+        </dependency>
+        <dependency>
+            <!-- Provides EHCacheManage  -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <!-- Same versions as pulled by spring-data -->
+            <version>${spring-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-framework.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.4.7</version>
+        </dependency>
+
+        <!-- Joda time persistence -->
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.2.0.GA</version>
+        </dependency>
+        <!-- JSR-310 dates and times persistence converter -->
+        <dependency>
+            <groupId>com.github.marschall</groupId>
+            <artifactId>threeten-jpa</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <!-- jdbc4 driver for microsoft sql 2xxx to 2012 -->
+        <dependency>
+            <groupId>com.microsoft</groupId>
+            <artifactId>sqljdbc41</artifactId>
+            <version>4.1.0-1.7.0_67-b01</version>
+        </dependency>
+
+        <!-- H2 database -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.187</version>
+        </dependency>
+        <!--
+        END of java persistence dependencies (jpa, orm, hibernate, jdbc-driver etc.)
+        -->
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
