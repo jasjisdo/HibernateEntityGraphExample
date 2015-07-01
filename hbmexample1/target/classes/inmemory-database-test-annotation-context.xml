@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="de.hbmexample"/>
+    <context:component-scan base-package="de.hbmexample1"/>
     <context:property-placeholder location="db.properties"/>
     <cache:annotation-driven/>
 
@@ -67,7 +67,7 @@
         <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
         <property name="packagesToScan">
             <array>
-                <value>de.hbmexample.entity</value>
+                <value>de.hbmexample1.entity</value>
             </array>
         </property>
         <property name="jpaProperties">
@@ -108,7 +108,7 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!-- Defines where repositories are placed -->
-    <jpa:repositories base-package="de.hbmexample"/>
+    <jpa:repositories base-package="de.hbmexample1"/>
 
     <!-- Cache managers for spring -->
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">

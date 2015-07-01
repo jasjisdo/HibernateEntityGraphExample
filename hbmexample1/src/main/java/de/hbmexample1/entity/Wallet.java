@@ -1,4 +1,4 @@
-package de.hbmexample.entity;
+package de.hbmexample1.entity;
 
 import javax.persistence.*;
 import java.util.List;
