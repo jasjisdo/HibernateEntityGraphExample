@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 /**
  * Created by domann on 21.06.15.
  */
-public class HibernateAttributeDescription {
+public class HibernateAttributeNode {
 
-    private static final Logger log = Logger.getLogger(HibernateAttributeDescription.class);
+    private static final Logger log = Logger.getLogger(HibernateAttributeNode.class);
     static {
         log.setLevel(Level.DEBUG);
     }
@@ -33,9 +33,9 @@ public class HibernateAttributeDescription {
 
     private boolean isMap;
 
-    private List<HibernateAttributeDescription> subgraph;
+    private List<HibernateAttributeNode> subgraph;
 
-    public HibernateAttributeDescription(AttributeNodeImpl hbmAttributeNode) {
+    public HibernateAttributeNode(AttributeNodeImpl hbmAttributeNode) {
         Attribute jpaAttribute = hbmAttributeNode.getAttribute();
         this.name              = jpaAttribute.getName();
         this.type              = jpaAttribute.getJavaType();
@@ -61,7 +61,7 @@ public class HibernateAttributeDescription {
         log.debug("subgraph=" + subgraph);
     }
 
-    private List<HibernateAttributeDescription> getAllAttributes(List<Subgraph> subgraphs) {
+    private List<HibernateAttributeNode> getAllAttributes(List<Subgraph> subgraphs) {
         log.debug("getAllAttributes(subgraph.size=" + subgraphs.size() + ")");
         // get stream of all subgraphs
         Stream<Subgraph> subgraphStream = subgraphs.stream();
@@ -73,8 +73,8 @@ public class HibernateAttributeDescription {
         }
         Stream<List<AttributeNode>> streamOfAttributeNodeLists = subgraphStream.flatMap(g -> g.getAttributeNodes().stream());
         // define converting function to convert all AttributeNodes to de.hbmexample1.egraph.HibernateAttributeDescription
-        Function<AttributeNode, HibernateAttributeDescription> convertToHbmAttr =
-                a -> new HibernateAttributeDescription((AttributeNodeImpl) a);
+        Function<AttributeNode, HibernateAttributeNode> convertToHbmAttr =
+                a -> new HibernateAttributeNode((AttributeNodeImpl) a);
         // flat all lists into one by mapping with the toList() collector, and by converting each element with
         // the above defined function
         return streamOfAttributeNodeLists
@@ -88,9 +88,9 @@ public class HibernateAttributeDescription {
 
     @Override
     public String toString() {
-        return "de.hbmexample1.egraph.HibernateAttributeDescription{" +
+        return "HibernateAttributeNode{" +
                 "name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", type='" + type.getName() + '\'' +
                 ", genericTypes=" + genericTypes +
                 ", isCollection=" + isCollection +
                 ", isMap=" + isMap +
@@ -113,7 +113,7 @@ public class HibernateAttributeDescription {
         return isCollection;
     }
 
-    public List<HibernateAttributeDescription> getSubgraph() {
+    public List<HibernateAttributeNode> getSubgraph() {
         return subgraph;
     }
 }

@@ -1,4 +1,6 @@
+import de.hbmexample1.egraph.HibernateAttributeNode;
 import de.hbmexample1.entity.Person;
+import org.hibernate.Hibernate;
 import org.hibernate.jpa.graph.internal.AttributeNodeImpl;
 import org.hibernate.jpa.graph.internal.EntityGraphImpl;
 import org.hibernate.jpa.graph.internal.SubgraphImpl;
@@ -22,6 +24,9 @@ public class EntityGraphView {
         EntityManager em = ((EntityManagerFactory) context.getBean("entityManagerFactory")).createEntityManager();
         EntityGraphImpl<?> entityGraph = (EntityGraphImpl<?>) em.getEntityGraph(Person.EG_PROFILE_FULL);
 
+        HibernateAttributeNode attributeNode;
+        List<HibernateAttributeNode> hibernateAttributeNodes = new ArrayList<>();
+
         StringBuilder sbout = new StringBuilder();
         sbout.append("\nEntityGraph=" + entityGraph.getName() + "\n");
 
@@ -29,9 +34,13 @@ public class EntityGraphView {
 
         sbout.append("AttributeNodes{");
 
+
         for (AttributeNode jpaAttributeNode : attributeNodeList) {
             AttributeNodeImpl hbAttributeNode = (AttributeNodeImpl) jpaAttributeNode;
             Attribute jpaAttribute = hbAttributeNode.getAttribute();
+
+            attributeNode = new HibernateAttributeNode(hbAttributeNode);
+            hibernateAttributeNodes.add(attributeNode);
 
             sbout.append("\n\tname=" + jpaAttributeNode.getAttributeName());
             sbout.append(" type=" + jpaAttribute.getJavaType().getName());
@@ -82,5 +91,9 @@ public class EntityGraphView {
         }
         sbout.append("\n}");
         System.out.println(sbout.toString());
+
+        for(HibernateAttributeNode n : hibernateAttributeNodes) {
+            System.out.println(n.toString());
+        }
     }
 }
