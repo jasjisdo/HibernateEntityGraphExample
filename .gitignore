@@ -12,4 +12,5 @@
 hs_err_pid*
 *.log
 *.iml
-hbmexample1/.idea
+**/.idea/**
+**/target/**
