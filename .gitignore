@@ -13,3 +13,5 @@ hs_err_pid*
 *.log
 *.iml
 hbmexample1/.idea
+hbmexample2/.idea
+hbmexample2/target
